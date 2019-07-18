@@ -328,7 +328,7 @@ com.aliware.tianchi.TestServerFilter
 
 ### 快速搭建开发环境
 
-#### 依赖项目
+#### 项目
 
 - [internal-dubbo](https://code.aliyun.com/middlewarerace2019/dubbo-internal)
 
@@ -339,6 +339,16 @@ com.aliware.tianchi.TestServerFilter
     mvn clean install -Dmaven.test.skip=true
     ```
    
+- [adaptive-loadbalance](https://code.aliyun.com/middlewarerace2019/adaptive-loadbalance)
+
+    选手按照题目提供的接口，实现 provider-consumer 协同的自适应负载均衡策略。
+    ```
+    git clone https://code.aliyun.com/middlewarerace2019/adaptive-loadbalance
+    cd adaptive-loadablance
+    mvn clean install -Dmaven.test.skip=true
+    ```
+
+
 - [internal-service](https://code.aliyun.com/middlewarerace2019/internal-service)
 
     内置服务，负责加载选手实现的负载均衡算法，启动 Consumer 和 Provider 程序。已经由赛题官方提供，开发过程不需要修改，只需要安装依赖。
@@ -347,12 +357,6 @@ com.aliware.tianchi.TestServerFilter
     cd internal-service
     mvn clean install -Dmaven.test.skip=true
     ```
-
-#### 开发项目
-
-- [adaptive-loadbalance](https://code.aliyun.com/middlewarerace2019/adaptive-loadbalance)
-
-    选手按照题目提供的接口，实现 provider-consumer 协同的自适应负载均衡策略。
 
 #### 本地开发
 
