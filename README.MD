@@ -344,7 +344,7 @@ com.aliware.tianchi.TestServerFilter
     选手按照题目提供的接口，实现 provider-consumer 协同的自适应负载均衡策略。
     ```
     git clone https://code.aliyun.com/middlewarerace2019/adaptive-loadbalance
-    cd adaptive-loadablance
+    cd adaptive-loadbalance
     mvn clean install -Dmaven.test.skip=true
     ```
 
