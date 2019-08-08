@@ -1,5 +1,7 @@
 package com.aliware.tianchi;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.dubbo.common.URL;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.Invoker;
@@ -19,8 +21,39 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class UserLoadBalance implements LoadBalance {
 
+    private static Map<String, Integer> weightMap = new ConcurrentHashMap<>();
+
     @Override
     public <T> Invoker<T> select(List<Invoker<T>> invokers, URL url, Invocation invocation) throws RpcException {
-        return invokers.get(ThreadLocalRandom.current().nextInt(invokers.size()));
+        return doSelect(invokers, url, invocation);
     }
+
+    private <T> Invoker<T> doSelect(List<Invoker<T>> invokers, URL url, Invocation invocation){
+        int len = invokers.size();
+
+        int weightSum = 0;
+        int[] weights = new int[len];
+        for(int i=0; i<len; i++){
+            weights[i] = weightMap.get(invokers.get(i).getUrl().getHost());
+            weightSum += weights[i];
+        }
+
+        int random = ThreadLocalRandom.current().nextInt(weightSum);
+        int idx = 0;
+        for (int i = 0; i < len; i++) {
+            random -= weights[i];
+            if (random < 0) {
+                idx = i;
+                break;
+            }
+        }
+
+        return invokers.get(idx);
+    }
+
+    protected static void addEvaluateValues(Map<String, String> map){
+        int weight = Integer.valueOf(map.get("weight"));
+        weightMap.put(map.get("host"), weight);
+    }
+
 }
